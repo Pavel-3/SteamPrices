@@ -1,6 +1,9 @@
 ﻿using Items;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace collections
 {
@@ -8,13 +11,14 @@ namespace collections
     {
         public Collection()
         {
-            
+
         }
         const int RatioOfConsumerToRed = 3125;
         const int RatioOfIndustrialToRed = 625;
         const int RatioOfBlueToRed = 125;
         const int RatioOfPurpleToRed = 25;
         const int RatioOfPinkToRed = 5;
+
         private double _probabilityOfConsumer;
         private double _probabilityOfIndustrial;
         private double _probabilityOfBlue;
@@ -22,23 +26,32 @@ namespace collections
         private double _probabilityOfPink;
         private double _probabilityOfRed;
 
-        public double CalculateTheExpectedValue(List<Item> collection)
+        private double _arithmeticMeanOfConsumer;
+        private double _arithmeticMeanOfIndustrial;
+        private double _arithmeticMeanOfBlue;
+        private double _arithmeticMeanOfPurple;
+        private double _arithmeticMeanOfPink;
+        private double _arithmeticMeanOfRed;
+
+        public virtual double CalculateTheExpectedValue(List<Item> collection)
         {
             CalculateProbability(collection);
-            double result;
-            result = 0;
-            return result;
+            CalculateTheArithmeticMean(collection);
+            return _probabilityOfConsumer * _arithmeticMeanOfConsumer + _probabilityOfIndustrial * _arithmeticMeanOfIndustrial +
+                _probabilityOfBlue * _arithmeticMeanOfBlue + _probabilityOfPurple * _arithmeticMeanOfPurple +
+                _probabilityOfPink * _arithmeticMeanOfPink + _probabilityOfRed * _arithmeticMeanOfRed;
         }
         private void CalculateProbability(List<Item> collection)
         {
-            _probabilityOfConsumer = RatioOfConsumerToRed / SumOfOdds(collection);
-            _probabilityOfIndustrial = RatioOfIndustrialToRed / SumOfOdds(collection);
-            _probabilityOfBlue = RatioOfBlueToRed / SumOfOdds(collection);
-            _probabilityOfPurple = RatioOfPurpleToRed / SumOfOdds(collection);
-            _probabilityOfPink = RatioOfPinkToRed / SumOfOdds(collection);
-            _probabilityOfRed = 1 / SumOfOdds(collection);
+            double sumOfOdds = CulculateSumOfOdds(collection);
+            _probabilityOfConsumer = RatioOfConsumerToRed / sumOfOdds;
+            _probabilityOfIndustrial = RatioOfIndustrialToRed / sumOfOdds;
+            _probabilityOfBlue = RatioOfBlueToRed / sumOfOdds;
+            _probabilityOfPurple = RatioOfPurpleToRed / sumOfOdds;
+            _probabilityOfPink = RatioOfPinkToRed / sumOfOdds;
+            _probabilityOfRed = 1 / sumOfOdds;
         }
-        private double SumOfOdds(List<Item> collection)
+        private double CulculateSumOfOdds(List<Item> collection)
         {
             bool hasConsumerGrade = false;
             bool hasIndustrialGrade = false;
@@ -47,8 +60,8 @@ namespace collections
             bool hasPink = false;
             bool hasRed = false;
             foreach (Item item in collection)
-            { 
-                switch (item.Category)
+            {
+                switch (item.ItemCategory)
                 {
                     case Category.ConsumerGrade:
                         hasConsumerGrade = true;
@@ -74,53 +87,59 @@ namespace collections
                 RatioOfBlueToRed * Convert.ToInt32(hasBlue) + RatioOfPurpleToRed * Convert.ToInt32(hasPurple) +
                 RatioOfPinkToRed * Convert.ToInt32(hasPink) + Convert.ToInt32(hasRed);
         }
-        private double CalculateTheArithmeticMeanOfConsumer(List<Item> collection)
+        private void CalculateTheArithmeticMean(List<Item> collection)
         {
-            (double, int) temp = FindSumOfTheCategory(collection, Category.ConsumerGrade);
-            return temp.Item1/temp.Item2;
-        }
-        private double CalculateTheArithmeticMeanOfIndustrial(List<Item> collection)
-        {
-            double result = 0;
-            //some code
-            return result;
-        }
-        private double CalculateTheArithmeticMeanOfBlue(List<Item> collection)
-        {
-            double result = 0;
-            //some code
-            return result;
-        }
-        private double CalculateTheArithmeticMeanOfPurple(List<Item> collection)
-        {
-            double result = 0;
-            //some code
-            return result;
-        }
-        private double CalculateTheArithmeticMeanOfPink(List<Item> collection)
-        {
-            double result = 0;
-            //some code
-            return result;
-        }
-        private double CalculateTheArithmeticMeanOfRed(List<Item> collection)
-        {
-            double result = 0;
-            //some code
-            return result;
-        }
-        private (double, int) FindSumOfTheCategory(List<Item> collection, Category category)
-        {
-            var temp = (sum:0.0, count:0);
+            double sumOfConsumer = 0;
+            double sumOfIndustrial = 0;
+            double sumOfBlue = 0;
+            double sumOfPurple = 0;
+            double sumOfPink = 0;
+            double sumOfRed = 0;
+
+            int countOfConsumer = 0;
+            int countOfIndustrial = 0;
+            int countOfBlue = 0;
+            int countOfPurple = 0;
+            int countOfPink = 0;
+            int countOfRed = 0;
+
             foreach (Item item in collection)
             {
-                if (item.ItemCategory == category)
+                switch (item.ItemCategory)
                 {
-                    temp.sum += item.Price;
-                    temp.count++;
+                    case Category.ConsumerGrade:
+                        sumOfConsumer += item.Price;
+                        countOfConsumer++;
+                        break;
+                    case Category.IndustrialGrade:
+                        sumOfIndustrial += item.Price;
+                        countOfIndustrial++;
+                        break;
+                    case Category.Blue:
+                        sumOfBlue += item.Price;
+                        countOfBlue++;
+                        break;
+                    case Category.Purple:
+                        sumOfPurple += item.Price;
+                        countOfPurple++;
+                        break;
+                    case Category.Pink:
+                        sumOfPink += item.Price;
+                        countOfPink++;
+                        break;
+                    case Category.Red:
+                        sumOfRed += item.Price;
+                        countOfRed++;
+                        break;
                 }
             }
-            return temp;
+
+            _arithmeticMeanOfConsumer = sumOfConsumer / countOfConsumer;
+            _arithmeticMeanOfIndustrial = sumOfIndustrial / countOfIndustrial;
+            _arithmeticMeanOfBlue = sumOfBlue / countOfBlue;
+            _arithmeticMeanOfPurple = sumOfPurple / countOfPurple;
+            _arithmeticMeanOfPink = sumOfPink / countOfPink;
+            _arithmeticMeanOfRed = sumOfRed / countOfRed;
         }
     }
 
@@ -130,8 +149,12 @@ namespace collections
         {
 
         }
-        List<Agent> _agentCollection;
+        
 
+        //public double CalculateTheExpectedValue()
+        //{
+        //    return base.CalculateTheExpectedValue(_agentCollection);
+        //}
 
     }
 }
