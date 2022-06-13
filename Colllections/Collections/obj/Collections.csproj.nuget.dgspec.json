@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\asdfg\\YandexDisk\\repos\\Collections\\Collections\\Collections.csproj": {}
+    "C:\\Users\\asdfg\\ProjectSteamPrices\\SteamPrices\\Colllections\\Collections\\Collections.csproj": {}
   },
   "projects": {
-    "C:\\Users\\asdfg\\YandexDisk\\repos\\Collections\\Collections\\Collections.csproj": {
+    "C:\\Users\\asdfg\\ProjectSteamPrices\\SteamPrices\\Colllections\\Collections\\Collections.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\asdfg\\YandexDisk\\repos\\Collections\\Collections\\Collections.csproj",
+        "projectUniqueName": "C:\\Users\\asdfg\\ProjectSteamPrices\\SteamPrices\\Colllections\\Collections\\Collections.csproj",
         "projectName": "Collections",
-        "projectPath": "C:\\Users\\asdfg\\YandexDisk\\repos\\Collections\\Collections\\Collections.csproj",
+        "projectPath": "C:\\Users\\asdfg\\ProjectSteamPrices\\SteamPrices\\Colllections\\Collections\\Collections.csproj",
         "packagesPath": "C:\\Users\\asdfg\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\asdfg\\YandexDisk\\repos\\Collections\\Collections\\obj\\",
+        "outputPath": "C:\\Users\\asdfg\\ProjectSteamPrices\\SteamPrices\\Colllections\\Collections\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\asdfg\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -54,7 +54,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
         }
       }
     }
