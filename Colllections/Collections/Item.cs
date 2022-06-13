@@ -17,7 +17,7 @@ namespace Collections
         {
             if (item1 is null || item2 is null)
                 return false;
-            return item1.Id == item2.Id && item1._category == item2._category &&
+            return item1.Id == item2.Id && item1.ItemCategory == item2.ItemCategory &&
                 item1.NameEN == item2.NameEN && item1._price == item2._price;
         }
         public static bool operator !=(Item item1, Item item2) => !(item1 == item2);
