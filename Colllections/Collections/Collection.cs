@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-// написать метод определения id для Non Exterior Weapon
 namespace Collections
 {
     enum Category
@@ -26,10 +25,7 @@ namespace Collections
     class Collection
     {
         protected List<Item> _collection = new List<Item>();
-        //public Collection(string nameEN)
-        //{
-        //    NameOfcollectionEN = nameEN;
-        //}
+
         public Collection(string nameEN, string nameRU)
         {
             NameOfcollectionEN = nameEN;
@@ -198,113 +194,12 @@ namespace Collections
         {
 
         }
-        //public void Add(NonExteriorWeapon weapon)
-        //{
-        //    _collection.Add(weapon);
-
-        //}
         public void Add(ExteriorWeapon weapon)
         {
             _exteriorWeaponCollection.Add(weapon);
         }
 
-
         private List<ExteriorWeapon> _exteriorWeaponCollection = new List<ExteriorWeapon>();
-        //private List<weapon> weapons = new List<weapon>();
-        //private class weapon
-        //{
-        //    public weapon(Category cat, int id, string nameEN, string nameRu)
-        //    {
-        //        category = cat;
-        //        Id = id;
-        //        NameEN = nameEN;
-        //        NameRu = nameRu;
-        //    }
-                
-        //    public int Id;
-        //    public string NameEN;
-        //    public string NameRu;
-
-        //    public double priceFieldTested;
-        //    public double priceMinimalWear;
-        //    public double priceBattleScarred;
-        //    public double priceWellWorn;
-        //    public double priceFactoryNew;
-
-        //    public int countFieldTested;
-        //    public int countMinimalWear;
-        //    public int countBattleScarred;
-        //    public int countWellWorn;
-        //    public int countFactoryNew;
-
-        //    public Category category;
-        //}
-        //private void createNonExteriorList()
-        //{
-        //    createWeaponList();
-        //    foreach (weapon temp in weapons)
-        //    {
-        //        double arithmeticMeanOfWeaponPrice = 0;
-        //        int countOfAllExterior = temp.countBattleScarred + temp.countFactoryNew + temp.countFieldTested +
-        //            temp.countMinimalWear + temp.countWellWorn;
-                
-        //        arithmeticMeanOfWeaponPrice = temp.priceBattleScarred * temp.countBattleScarred / countOfAllExterior +
-        //            temp.priceFactoryNew * temp.countFactoryNew / countOfAllExterior +
-        //            temp.priceFieldTested * temp.countFieldTested / countOfAllExterior +
-        //            temp.priceMinimalWear * temp.countMinimalWear / countOfAllExterior +
-        //            temp.priceWellWorn * temp.countWellWorn / countOfAllExterior;
-        //        NonExteriorWeapon t = new NonExteriorWeapon(GetNonExteriorWeaponId(temp), temp.category, arithmeticMeanOfWeaponPrice, temp.NameEN, temp.NameRu, NameOfcollectionEN);
-        //        _collection.Add(t);
-        //    }
-        //}
-        //private int GetNonExteriorWeaponId(weapon someWeapon)
-        //{
-        //    //some code
-        //    return 0;
-        //}
-        //private void createWeaponList()
-        //{
-        //    bool isInWeaponCollection;
-        //    foreach (ExteriorWeapon t in _exteriorWeaponCollection)
-        //    {
-        //        weapon temp = new weapon(t.ItemCategory, t.Id, t.NameEN, t.NameRU);
-        //        isInWeaponCollection = false;
-        //        foreach (weapon m in weapons)
-        //        {
-        //            if (m.NameEN == t.NameEN)
-        //            {
-        //                isInWeaponCollection = true;
-        //                temp = m;
-        //                break;
-        //            }
-        //        }
-        //        switch (t.exterior)
-        //        {
-        //            case Exterior.FieldTested:
-        //                temp.priceFieldTested = t.Price;
-        //                temp.countFieldTested = t.countOfWeapon;
-        //                break;
-        //            case Exterior.MinimalWear:
-        //                temp.priceMinimalWear = t.Price;
-        //                temp.countMinimalWear = t.countOfWeapon;
-        //                break;
-        //            case Exterior.BattleScarred:
-        //                temp.priceBattleScarred = t.Price;
-        //                temp.countBattleScarred = t.countOfWeapon;
-        //                break;
-        //            case Exterior.WellWorn:
-        //                temp.priceWellWorn = t.Price;
-        //                temp.countWellWorn = t.countOfWeapon;
-        //                break;
-        //            case Exterior.FactoryNew:
-        //                temp.priceFactoryNew = t.Price;
-        //                temp.countFactoryNew = t.countOfWeapon;
-        //                break;
-        //        }
-        //        if(!isInWeaponCollection)
-        //            weapons.Add(temp);
-        //    }
-        //}
         protected override void CalculateTheArithmeticMeanOfGrade()
         {
             _collection.Distinct();
