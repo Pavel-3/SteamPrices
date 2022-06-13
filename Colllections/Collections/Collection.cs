@@ -194,17 +194,6 @@ namespace Collections
         {
 
         }
-        public void Add(ExteriorWeapon weapon)
-        {
-            _exteriorWeaponCollection.Add(weapon);
-        }
-
-        private List<ExteriorWeapon> _exteriorWeaponCollection = new List<ExteriorWeapon>();
-        protected override void CalculateTheArithmeticMeanOfGrade()
-        {
-            _collection.Distinct();
-            //createNonExteriorList();
-            base.CalculateTheArithmeticMeanOfGrade();
-        }
+        public void Add(ExteriorWeapon weapon) => _collection.Add(weapon);
     }
 }
