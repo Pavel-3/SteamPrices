@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Collections
+﻿namespace Collections
 {
-    enum Category
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public enum Category
     {
         Consumer,
         Industrial,
@@ -14,7 +14,7 @@ namespace Collections
         Pink,
         Red
     }
-    enum Exterior
+    public enum Exterior
     {
         FieldTested,
         MinimalWear,
@@ -22,7 +22,7 @@ namespace Collections
         WellWorn,
         FactoryNew
     }
-    class Collection
+    public class Collection
     {
         protected List<Item> _collection = new List<Item>();
 
@@ -169,7 +169,7 @@ namespace Collections
         }
     }
 
-    class AgentCollection : Collection
+    public class AgentCollection : Collection
     {
         public AgentCollection(string nameEN, string nameRU):base(nameEN, nameRU)
         {
@@ -178,7 +178,7 @@ namespace Collections
         public void Add(Agent agent) => _collection.Add(agent);
     }
 
-    class StikerCollection : Collection
+    public class StikerCollection : Collection
     {             
         public StikerCollection(string nameEN, string nameRU):base(nameEN, nameRU)
         {
@@ -188,7 +188,7 @@ namespace Collections
 
     }
 
-    class WeaponCollection : Collection
+    public class WeaponCollection : Collection
     {
         WeaponCollection(string nameEN, string nameRU) : base(nameEN, nameRU)
         {

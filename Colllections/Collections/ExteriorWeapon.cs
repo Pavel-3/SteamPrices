@@ -1,6 +1,6 @@
 ﻿namespace Collections
 {
-    class ExteriorWeapon : Item
+    public class ExteriorWeapon : Item
     {
 
         public ExteriorWeapon(int id, Category category, double price, string nameEN, string nameRU, string nameOfCollection, Exterior exterior)

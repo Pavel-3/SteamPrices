@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\asdfg\\ProjectSteamPrices\\SteamPrices\\Colllections\\Collections\\Collections.csproj": {}
+    "C:\\Users\\asdfg\\SteamPrices\\Colllections\\Collections\\Collections.csproj": {}
   },
   "projects": {
-    "C:\\Users\\asdfg\\ProjectSteamPrices\\SteamPrices\\Colllections\\Collections\\Collections.csproj": {
+    "C:\\Users\\asdfg\\SteamPrices\\Colllections\\Collections\\Collections.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\asdfg\\ProjectSteamPrices\\SteamPrices\\Colllections\\Collections\\Collections.csproj",
+        "projectUniqueName": "C:\\Users\\asdfg\\SteamPrices\\Colllections\\Collections\\Collections.csproj",
         "projectName": "Collections",
-        "projectPath": "C:\\Users\\asdfg\\ProjectSteamPrices\\SteamPrices\\Colllections\\Collections\\Collections.csproj",
+        "projectPath": "C:\\Users\\asdfg\\SteamPrices\\Colllections\\Collections\\Collections.csproj",
         "packagesPath": "C:\\Users\\asdfg\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\asdfg\\ProjectSteamPrices\\SteamPrices\\Colllections\\Collections\\obj\\",
+        "outputPath": "C:\\Users\\asdfg\\SteamPrices\\Colllections\\Collections\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\asdfg\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,7 +45,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -54,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

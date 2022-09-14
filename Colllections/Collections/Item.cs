@@ -11,7 +11,7 @@ namespace Collections
         protected InvalidValueException(SerializationInfo info, StreamingContext context) : base(info, context) { }
         public override string ToString() => Message;
     }
-    abstract class Item
+    public abstract class Item
     {
         public static bool operator ==(Item item1, Item item2)
         {
@@ -58,5 +58,9 @@ namespace Collections
         public void ChangeNameRU (string newNameRU) => NameRU = newNameRU;
         public readonly string NameEN;
         public string NameRU { get; protected set; }
+        public override string ToString()
+        {
+            return $"id: {Id}\tItem Category: {ItemCategory}\t\tPrice: {Price}\tNameEN: {NameEN}\tNameRU: {NameRU}\t Name of collection: {NameOfCollection}";
+        }
     }
 }
