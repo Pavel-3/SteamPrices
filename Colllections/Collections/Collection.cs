@@ -25,12 +25,13 @@ namespace Collections
     }
     class Collection
     {
-        protected List<Item> _collection = new List<Item>();
+        protected IEnumerable<Item> _collection;
 
-        public Collection(string nameEN, string nameRU)
+        public Collection(string nameEN, string nameRU, IEnumerable<Item> collection)
         {
             NameOfcollectionEN = nameEN;
             NameOfcollectionRU = nameRU;
+            _collection = collection;
         }
         private const int RatioOfConsumerToRed = 3125;
         private const int RatioOfIndustrialToRed = 625;
@@ -172,32 +173,25 @@ namespace Collections
 
     class AgentCollection : Collection
     {
-        public AgentCollection(string nameEN, string nameRU):base(nameEN, nameRU)
+        public AgentCollection(string nameEN, string nameRU, IEnumerable<Item> collection) :base(nameEN, nameRU,collection)
         {
 
         }
-        public void Add(Agent agent) => _collection.Add(agent);
     }
 
     class StikerCollection : Collection
     {             
-        public StikerCollection(string nameEN, string nameRU):base(nameEN, nameRU)
+        public StikerCollection(string nameEN, string nameRU, IEnumerable<Item> collection):base(nameEN, nameRU, collection)
         {
 
         }
-        public void Add(Stiker stiker) => _collection.Add(stiker);
 
     }
 
     class WeaponCollection : Collection
     {
-        WeaponCollection(string nameEN, string nameRU) : base(nameEN, nameRU)
+        WeaponCollection(string nameEN, string nameRU, IEnumerable<Item> collections) : base(nameEN, nameRU,collections)
         {
-
-        }
-        public void Add(NonExteriorWeapon weapon)
-        {
-            _collection.Add(weapon);
 
         }
         public void Add(ExteriorWeapon weapon)
@@ -261,46 +255,13 @@ namespace Collections
         }
         private void createWeaponList()
         {
-            bool isInWeaponCollection;
-            foreach (ExteriorWeapon t in _exteriorWeaponCollection)
-            {
-                weapon temp = new weapon(t.ItemCategory, t.Id, t.NameEN, t.NameRU);
-                isInWeaponCollection = false;
-                foreach (weapon m in weapons)
-                {
-                    if (m.NameEN == t.NameEN)
-                    {
-                        isInWeaponCollection = true;
-                        temp = m;
-                        break;
-                    }
-                }
-                switch (t.exterior)
-                {
-                    case Exterior.FieldTested:
-                        temp.priceFieldTested = t.Price;
-                        temp.countFieldTested = t.countOfWeapon;
-                        break;
-                    case Exterior.MinimalWear:
-                        temp.priceMinimalWear = t.Price;
-                        temp.countMinimalWear = t.countOfWeapon;
-                        break;
-                    case Exterior.BattleScarred:
-                        temp.priceBattleScarred = t.Price;
-                        temp.countBattleScarred = t.countOfWeapon;
-                        break;
-                    case Exterior.WellWorn:
-                        temp.priceWellWorn = t.Price;
-                        temp.countWellWorn = t.countOfWeapon;
-                        break;
-                    case Exterior.FactoryNew:
-                        temp.priceFactoryNew = t.Price;
-                        temp.countFactoryNew = t.countOfWeapon;
-                        break;
-                }
-                if (!isInWeaponCollection)
-                    weapons.Add(temp);
-            }
+            var WeaponList = from item in _collection
+                             let weapon_ = (ExteriorWeapon)item
+                             orderby weapon_.ItemCategory, weapon_.exterior
+                             group weapon_ by weapon_.ItemCategory
+                             into weaponItem
+                             group weaponItem by 
+
         }
         protected override void CalculateTheArithmeticMeanOfGrade()
         {
