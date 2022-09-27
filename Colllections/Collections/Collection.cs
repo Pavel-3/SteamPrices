@@ -6,7 +6,7 @@ using System.Linq;
 // написать метод определения id для Non Exterior Weapon
 namespace Collections
 {
-    enum Category
+    public enum Category
     {
         Consumer,
         Industrial,
@@ -15,7 +15,7 @@ namespace Collections
         Pink,
         Red
     }
-    enum Exterior
+    public enum Exterior
     {
         FieldTested,
         MinimalWear,
@@ -23,21 +23,23 @@ namespace Collections
         WellWorn,
         FactoryNew
     }
-    class Collection
+    public class Collection
     {
-        protected IEnumerable<Item> _collection;
+        protected IEnumerable<IGrouping<Category, Item>> _collection;
 
         public Collection(string nameEN, string nameRU, IEnumerable<Item> collection)
         {
             NameOfcollectionEN = nameEN;
             NameOfcollectionRU = nameRU;
-            _collection = collection;
+            _collection = from item in collection
+                          orderby item.ItemCategory
+                          group item by item.ItemCategory;
         }
-        private const int RatioOfConsumerToRed = 3125;
-        private const int RatioOfIndustrialToRed = 625;
-        private const int RatioOfBlueToRed = 125;
-        private const int RatioOfPurpleToRed = 25;
-        private const int RatioOfPinkToRed = 5;
+        protected const int RatioOfConsumerToRed = 3125;
+        protected const int RatioOfIndustrialToRed = 625;
+        protected const int RatioOfBlueToRed = 125;
+        protected const int RatioOfPurpleToRed = 25;
+        protected const int RatioOfPinkToRed = 5;
 
         private double _probabilityOfConsumer;
         private double _probabilityOfIndustrial;
@@ -171,32 +173,12 @@ namespace Collections
         }
     }
 
-    class AgentCollection : Collection
-    {
-        public AgentCollection(string nameEN, string nameRU, IEnumerable<Item> collection) :base(nameEN, nameRU,collection)
-        {
 
-        }
-    }
-
-    class StikerCollection : Collection
-    {             
-        public StikerCollection(string nameEN, string nameRU, IEnumerable<Item> collection):base(nameEN, nameRU, collection)
-        {
-
-        }
-
-    }
-
-    class WeaponCollection : Collection
+    public class WeaponCollection : Collection
     {
         WeaponCollection(string nameEN, string nameRU, IEnumerable<Item> collections) : base(nameEN, nameRU,collections)
         {
 
-        }
-        public void Add(ExteriorWeapon weapon)
-        {
-            _exteriorWeaponCollection.Add(weapon);
         }
 
 

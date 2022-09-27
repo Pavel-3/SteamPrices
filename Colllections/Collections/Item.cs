@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Collections
 {
-    class InvalidValueException : Exception
+    public class InvalidValueException : Exception
     {
         public InvalidValueException() : base() { }
         public InvalidValueException(string message) : base(message) { }
@@ -11,7 +11,7 @@ namespace Collections
         protected InvalidValueException(SerializationInfo info, StreamingContext context) : base(info, context) { }
         public override string ToString() => Message;
     }
-    abstract class Item
+    public class Item
     {
         public static bool operator ==(Item item1, Item item2)
         {
