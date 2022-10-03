@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 
 // написать метод определения id для Non Exterior Weapon
 namespace Collections
@@ -25,15 +26,18 @@ namespace Collections
     }
     public class Collection
     {
-        protected IEnumerable<IGrouping<Category, Item>> _collection;
+        protected IEnumerable<Item> _collection;
 
         public Collection(string nameEN, string nameRU, IEnumerable<Item> collection)
         {
             NameOfcollectionEN = nameEN;
             NameOfcollectionRU = nameRU;
-            _collection = from item in collection
-                          orderby item.ItemCategory
-                          group item by item.ItemCategory;
+            collection = collection.Distinct();
+            //_collection = from item in collection
+            //              orderby item.ItemCategory
+            //              group item by item.ItemCategory;
+            _collection = collection.Distinct();
+
         }
         protected const int RatioOfConsumerToRed = 3125;
         protected const int RatioOfIndustrialToRed = 625;
@@ -55,6 +59,13 @@ namespace Collections
         private double _arithmeticMeanOfPink;
         private double _arithmeticMeanOfRed;
 
+        private bool _hasConsumer = false;
+        private bool _hasIndustrial = false;
+        private bool _hasBlue = false;
+        private bool _hasPurple = false;
+        private bool _hasPink = false;
+        private bool _hasRed = false;
+
         public readonly string NameOfcollectionEN;
         private string _nameOfcollectionRU;
         public string NameOfcollectionRU
@@ -65,7 +76,6 @@ namespace Collections
         public void ChangeNameOfCollection(string newName) => NameOfcollectionRU = newName;
         public virtual double CalculateTheExpectedValue()
         {
-            _collection.Distinct();
             CalculateProbability();
             CalculateTheArithmeticMeanOfGrade();
             return _probabilityOfConsumer * _arithmeticMeanOfConsumer + _probabilityOfIndustrial * _arithmeticMeanOfIndustrial +
@@ -75,48 +85,42 @@ namespace Collections
         private void CalculateProbability()
         {
             double sumOfOdds = CulculateSumOfOdds();
-            _probabilityOfConsumer = RatioOfConsumerToRed / sumOfOdds;
-            _probabilityOfIndustrial = RatioOfIndustrialToRed / sumOfOdds;
-            _probabilityOfBlue = RatioOfBlueToRed / sumOfOdds;
-            _probabilityOfPurple = RatioOfPurpleToRed / sumOfOdds;
-            _probabilityOfPink = RatioOfPinkToRed / sumOfOdds;
-            _probabilityOfRed = 1 / sumOfOdds;
+            _probabilityOfConsumer = _hasConsumer ? RatioOfConsumerToRed / sumOfOdds : 0;
+            _probabilityOfIndustrial = _hasIndustrial ? RatioOfIndustrialToRed / sumOfOdds : 0;
+            _probabilityOfBlue = _hasBlue ? RatioOfBlueToRed / sumOfOdds : 0;
+            _probabilityOfPurple = _hasPurple ? RatioOfPurpleToRed / sumOfOdds : 0;
+            _probabilityOfPink = _hasPink ? RatioOfPinkToRed / sumOfOdds : 0;
+            _probabilityOfRed = _hasRed ? 1 / sumOfOdds : 0;
         }
         private double CulculateSumOfOdds()
         {
-            bool hasConsumer = false;
-            bool hasIndustrial = false;
-            bool hasBlue = false;
-            bool hasPurple = false;
-            bool hasPink = false;
-            bool hasRed = false;
             foreach (Item item in _collection)
             {
                 switch (item.ItemCategory)
                 {
                     case Category.Consumer:
-                        hasConsumer = true;
+                        _hasConsumer = true;
                         break;
                     case Category.Industrial:
-                        hasIndustrial = true;
+                        _hasIndustrial = true;
                         break;
                     case Category.Blue:
-                        hasBlue = true;
+                        _hasBlue = true;
                         break;
                     case Category.Purple:
-                        hasPurple = true;
+                        _hasPurple = true;
                         break;
                     case Category.Pink:
-                        hasPink = true;
+                        _hasPink = true;
                         break;
                     case Category.Red:
-                        hasRed = true;
+                        _hasRed = true;
                         break;
                 }
             }
-            return RatioOfConsumerToRed * Convert.ToInt32(hasConsumer) + RatioOfIndustrialToRed * Convert.ToInt32(hasIndustrial) +
-                RatioOfBlueToRed * Convert.ToInt32(hasBlue) + RatioOfPurpleToRed * Convert.ToInt32(hasPurple) +
-                RatioOfPinkToRed * Convert.ToInt32(hasPink) + Convert.ToInt32(hasRed);
+            return RatioOfConsumerToRed * Convert.ToInt32(_hasConsumer) + RatioOfIndustrialToRed * Convert.ToInt32(_hasIndustrial) +
+                RatioOfBlueToRed * Convert.ToInt32(_hasBlue) + RatioOfPurpleToRed * Convert.ToInt32(_hasPurple) +
+                RatioOfPinkToRed * Convert.ToInt32(_hasPink) + Convert.ToInt32(_hasRed);
         }
         protected virtual void CalculateTheArithmeticMeanOfGrade()
         {
@@ -164,91 +168,65 @@ namespace Collections
                 }
             }
 
-            _arithmeticMeanOfConsumer = sumOfConsumer / countOfConsumer;
-            _arithmeticMeanOfIndustrial = sumOfIndustrial / countOfIndustrial;
-            _arithmeticMeanOfBlue = sumOfBlue / countOfBlue;
-            _arithmeticMeanOfPurple = sumOfPurple / countOfPurple;
-            _arithmeticMeanOfPink = sumOfPink / countOfPink;
-            _arithmeticMeanOfRed = sumOfRed / countOfRed;
+            _arithmeticMeanOfConsumer = _hasConsumer ? sumOfConsumer / countOfConsumer : 0;
+            _arithmeticMeanOfIndustrial = _hasIndustrial ? sumOfIndustrial / countOfIndustrial : 0;
+            _arithmeticMeanOfBlue = _hasBlue ? sumOfBlue / countOfBlue : 0;
+            _arithmeticMeanOfPurple = _hasPurple ? sumOfPurple / countOfPurple : 0;
+            _arithmeticMeanOfPink = _hasPink ? sumOfPink / countOfPink : 0;
+            _arithmeticMeanOfRed = _hasRed ? sumOfRed / countOfRed : 0;
         }
     }
 
-
+    public class AgentCollection : Collection
+    {
+        public AgentCollection(string nameEN, string nameRU, IEnumerable<Item> collections) : base(nameEN, nameRU, collections) { }
+    }
     public class WeaponCollection : Collection
     {
-        WeaponCollection(string nameEN, string nameRU, IEnumerable<Item> collections) : base(nameEN, nameRU,collections)
+        public WeaponCollection(string nameEN, string nameRU, IEnumerable<ExteriorWeapon> collections) : base(nameEN, nameRU,collections)
         {
 
-        }
-
-
-        private List<ExteriorWeapon> _exteriorWeaponCollection = new List<ExteriorWeapon>();
-        private List<weapon> weapons = new List<weapon>();
-        private class weapon
-        {
-            public weapon(Category cat, int id, string nameEN, string nameRu)
-            {
-                category = cat;
-                Id = id;
-                NameEN = nameEN;
-                NameRu = nameRu;
-            }
-
-            public int Id;
-            public string NameEN;
-            public string NameRu;
-
-            public double priceFieldTested;
-            public double priceMinimalWear;
-            public double priceBattleScarred;
-            public double priceWellWorn;
-            public double priceFactoryNew;
-
-            public int countFieldTested;
-            public int countMinimalWear;
-            public int countBattleScarred;
-            public int countWellWorn;
-            public int countFactoryNew;
-
-            public Category category;
-        }
+        } 
         private void createNonExteriorList()
         {
-            createWeaponList();
-            foreach (weapon temp in weapons)
+            var groupingWeapon = from item in _collection
+                                 let weapon = (ExteriorWeapon)item
+                                 orderby weapon.ItemCategory, weapon.ExteriorOfWeapon
+                                 group weapon by weapon.ItemCategory into groupingByCategory
+                                 from i in (
+                                    from weapon in groupingByCategory
+                                    group weapon by weapon.NameEN)
+                                 group i by groupingByCategory.Key;
+            List<NonExteriorWeapon> nonExteriorWeapons = new List<NonExteriorWeapon>();
+            foreach (var groupingByCategory in groupingWeapon)
             {
-                double arithmeticMeanOfWeaponPrice = 0;
-                int countOfAllExterior = temp.countBattleScarred + temp.countFactoryNew + temp.countFieldTested +
-                    temp.countMinimalWear + temp.countWellWorn;
-
-                arithmeticMeanOfWeaponPrice = temp.priceBattleScarred * temp.countBattleScarred / countOfAllExterior +
-                    temp.priceFactoryNew * temp.countFactoryNew / countOfAllExterior +
-                    temp.priceFieldTested * temp.countFieldTested / countOfAllExterior +
-                    temp.priceMinimalWear * temp.countMinimalWear / countOfAllExterior +
-                    temp.priceWellWorn * temp.countWellWorn / countOfAllExterior;
-                NonExteriorWeapon t = new NonExteriorWeapon(GetNonExteriorWeaponId(temp), temp.category, arithmeticMeanOfWeaponPrice, temp.NameEN, temp.NameRu, NameOfcollectionEN);
-                _collection.Add(t);
+                foreach (var groupingByName in groupingByCategory)
+                {
+                    int countOfWeapons = 0;
+                    double price = 0;
+                    int countOfWeaponsOnMarket = 0;
+                    foreach(var weapon in groupingByName)
+                    {
+                        countOfWeapons++;
+                        countOfWeaponsOnMarket += weapon.CountOfWeapons;
+                        price += weapon.Price * weapon.CountOfWeapons;
+                    }
+                    nonExteriorWeapons.Add(new NonExteriorWeapon(GetNonExteriorWeaponId(groupingByName), groupingByCategory.Key,
+                        countOfWeaponsOnMarket == 0 ? price/countOfWeapons : price / (countOfWeaponsOnMarket),
+                        groupingByName.Key, "", NameOfcollectionEN));
+                }
             }
+            _collection = nonExteriorWeapons;
         }
-        private int GetNonExteriorWeaponId(weapon someWeapon)
+        private int GetNonExteriorWeaponId(IGrouping<string, ExteriorWeapon> someWeapon)
         {
             //some code
             return 0;
         }
-        private void createWeaponList()
-        {
-            var WeaponList = from item in _collection
-                             let weapon_ = (ExteriorWeapon)item
-                             orderby weapon_.ItemCategory, weapon_.exterior
-                             group weapon_ by weapon_.ItemCategory
-                             into weaponItem
-                             group weaponItem by 
-
-        }
         protected override void CalculateTheArithmeticMeanOfGrade()
         {
             _collection.Distinct();
-            //createNonExteriorList();
+            createNonExteriorList();
             base.CalculateTheArithmeticMeanOfGrade();
         }
     }
