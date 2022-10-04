@@ -11,7 +11,7 @@ namespace Collections
         protected InvalidValueException(SerializationInfo info, StreamingContext context) : base(info, context) { }
         public override string ToString() => Message;
     }
-    public abstract class Item
+    public abstract class Item : IEquatable<Item>
     {
         public static bool operator ==(Item item1, Item item2)
         {
@@ -28,6 +28,15 @@ namespace Collections
                 return this == item;
             return false;
         }
+        public bool Equals(Item other)
+        {
+            if (Object.ReferenceEquals(other, null)) return false;
+            return this == other;
+        }
+        public override int GetHashCode()
+        {
+            return Tuple.Create(Id, ItemCategory, Price, NameEN, NameOfCollection).GetHashCode();
+        }
         public Item(int id, Category category, double price, string nameEN, string nameRU, string nameOfCollection)
         {
             Id = id;
@@ -43,11 +52,11 @@ namespace Collections
         private double _price;
         public double Price
         {
-            get 
-            { 
-                return _price; 
+            get
+            {
+                return _price;
             }
-            set 
+            set
             {
                 if (value > 0)
                     _price = value;
@@ -55,7 +64,7 @@ namespace Collections
                     throw new InvalidValueException();
             }
         }
-        public void ChangeNameRU (string newNameRU) => NameRU = newNameRU;
+        public void ChangeNameRU(string newNameRU) => NameRU = newNameRU;
         public readonly string NameEN;
         public string NameRU { get; protected set; }
         public override string ToString()

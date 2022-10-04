@@ -8,19 +8,24 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\asdfg\\.nuget\\packages\\": {}
+    "C:\\Users\\asdfg\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\asdfg\\SteamPrices\\Colllections\\Collections\\Collections.csproj",
+      "projectUniqueName": "C:\\Users\\asdfg\\NewSteamPrices\\SteamPrices\\Colllections\\Collections\\Collections.csproj",
       "projectName": "Collections",
-      "projectPath": "C:\\Users\\asdfg\\SteamPrices\\Colllections\\Collections\\Collections.csproj",
+      "projectPath": "C:\\Users\\asdfg\\NewSteamPrices\\SteamPrices\\Colllections\\Collections\\Collections.csproj",
       "packagesPath": "C:\\Users\\asdfg\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\asdfg\\SteamPrices\\Colllections\\Collections\\obj\\",
+      "outputPath": "C:\\Users\\asdfg\\NewSteamPrices\\SteamPrices\\Colllections\\Collections\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\asdfg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -61,7 +66,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }
