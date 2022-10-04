@@ -1,4 +1,7 @@
-﻿namespace Collections
+﻿using Collections;
+using System.Collections.Generic;
+
+namespace Collections
 {
     using System;
     using System.Collections;
@@ -24,12 +27,13 @@
     }
     public class Collection
     {
-        protected List<Item> _collection = new List<Item>();
+        protected IEnumerable<Item> _collection;
 
-        public Collection(string nameEN, string nameRU)
+        public Collection(string nameEN, string nameRU, IEnumerable<Item> collection)
         {
             NameOfcollectionEN = nameEN;
             NameOfcollectionRU = nameRU;
+            _collection = collection.Distinct();
         }
         private const int RatioOfConsumerToRed = 3125;
         private const int RatioOfIndustrialToRed = 625;
@@ -171,29 +175,17 @@
 
     public class AgentCollection : Collection
     {
-        public AgentCollection(string nameEN, string nameRU):base(nameEN, nameRU)
-        {
-
-        }
-        public void Add(Agent agent) => _collection.Add(agent);
+        public AgentCollection(string nameEN, string nameRU, IEnumerable<Item> collections) : base(nameEN, nameRU, collections) { }
     }
 
     public class StikerCollection : Collection
     {             
-        public StikerCollection(string nameEN, string nameRU):base(nameEN, nameRU)
-        {
-
-        }
-        public void Add(Stiker stiker) => _collection.Add(stiker);
+        public StikerCollection(string nameEN, string nameRU, IEnumerable<Item> collections) : base(nameEN, nameRU, collections) { }
 
     }
 
     public class WeaponCollection : Collection
     {
-        WeaponCollection(string nameEN, string nameRU) : base(nameEN, nameRU)
-        {
-
-        }
-        public void Add(ExteriorWeapon weapon) => _collection.Add(weapon);
+        WeaponCollection(string nameEN, string nameRU, IEnumerable<Item> collections) : base(nameEN, nameRU, collections) { }
     }
 }
